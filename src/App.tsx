@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Container } from './components/Container';
 import { Logo } from './components/Logo';
 import { Menu } from './components/Menu';
@@ -6,31 +8,32 @@ import { DefaultInput } from './components/DefaultInput';
 import { Cycles } from './components/Cycles';
 import { DefaultButton } from './components/DefaultButton';
 import { Footer } from './components/Footer';
+import { Heading } from './components/Heading';
 
 import { PlayCircleIcon } from 'lucide-react';
 
 import './styles/theme.css';
 import './styles/global.css';
-import { Heading } from './components/Heading';
 
 export default function App() {
-  let numero = 0;
+  // Quero que todos os componentes que usam 'numero'
+  // saibam das mudanças em seu valor
+
+  // Sempre que eu usar useState, não vou usar atribuição diretamente
+  const [numero, setNumero] = useState(0);
+  /*  const [numero, setNumero] = useState(() => {
+    console.log('Lazy initialization');
+    return 0;
+  }); */
 
   function handleClick() {
-    const span = document.getElementById('numero');
-
-    if (!span) return;
-
-    numero += 1;
-    span.innerText = numero.toString();
-    console.log(numero, Date.now());
+    setNumero(prevState => prevState + 1);
+    //setNumero(1);
   }
 
   return (
     <>
-      <Heading>
-        Número: <span id='numero'>{numero}</span>
-      </Heading>
+      <Heading>Número: {numero}</Heading>
       <button onClick={handleClick}>Aumentar</button>
 
       <Container>
